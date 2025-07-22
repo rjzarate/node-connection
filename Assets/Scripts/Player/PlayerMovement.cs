@@ -53,7 +53,16 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             HandleMove();
-            HandleCamera();
+
+            if (UIManager.Instance.ScrollShown)
+            {
+                HandleCamera();
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
 
         characterController.Move(moveDirection * Time.deltaTime);

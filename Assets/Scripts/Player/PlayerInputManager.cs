@@ -18,6 +18,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         PlayerInput.Player.Jump.performed += Jump_performed;
         PlayerInput.Player.Sprint.performed += Sprint_performed;
         PlayerInput.Player.Sprint.canceled += Sprint_canceled;
+        PlayerInput.Player.Interact.performed += Interact_performed;
     }
 
     private void OnDestroy()
@@ -25,9 +26,18 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         PlayerInput.Player.Jump.performed -= Jump_performed;
         PlayerInput.Player.Sprint.performed -= Sprint_performed;
         PlayerInput.Player.Sprint.canceled -= Sprint_canceled;
+        PlayerInput.Player.Interact.performed -= Interact_performed;
 
         PlayerInput.Dispose();
     }
+
+    private void Interact_performed(InputAction.CallbackContext context)
+    {
+        InteractEvent?.Invoke();
+    }
+
+    public delegate void InteractEventHandler();
+    public event InteractEventHandler InteractEvent;
 
     private void Sprint_canceled(InputAction.CallbackContext context)
     {
